@@ -1323,7 +1323,7 @@ export const AdminDashboard: React.FC = () => {
           />
           <div className="flex flex-col">
             <span className="font-bold text-sm tracking-widest text-[var(--color-gold)] leading-none">ELHAMSHOP</span>
-            <span className="text-[9px] text-[#8a8a8a] mt-1">Admin Panel</span>
+            <span className="text-[9px] text-[#8a8a8a] mt-1">Admin PanelLUK</span>
           </div>
         </div>
 
