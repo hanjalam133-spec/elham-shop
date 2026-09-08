@@ -1,8 +1,7 @@
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // ❌ পুরানো INITIAL_PRODUCTS এর বদলে ফায়ারস্টোর থেকে ডাটা আসার আগে খালি অ্যারে [] রাখুন
   const [products, setProducts] = useState<Product[]>([]);
 
-  // ✅ ফায়ারস্টোর থেকে রিয়েল-টাইম প্রোডাক্ট লোড করার জন্য এই useEffect টি যোগ করুন
+  // ✅ ফায়ারস্টোর থেকে রিয়েল-টাইম ডাটা ফেচিং
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "products"), (snapshot) => {
       if (!snapshot.empty) {
@@ -20,3 +19,30 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return () => unsubscribe();
   }, []);
+
+  // ✅ অ্যাডমিন প্যানেল থেকে প্রোডাক্ট এড করার ফায়ারস্টোর ফাংশন
+  const addProduct = async (product: Product) => {
+    try {
+      await setDoc(doc(db, "products", product.id), product);
+    } catch (error) {
+      console.error("Error adding product to Firestore:", error);
+    }
+  };
+
+  // ✅ প্রোডাক্ট আপডেট করার ফাংশন
+  const updateProduct = async (product: Product) => {
+    try {
+      await setDoc(doc(db, "products", product.id), product);
+    } catch (error) {
+      console.error("Error updating product in Firestore:", error);
+    }
+  };
+
+  // ✅ প্রোডাক্ট ডিলিট করার ফাংশন
+  const deleteProduct = async (productId: string) => {
+    try {
+      await deleteDoc(doc(db, "products", productId));
+    } catch (error) {
+      console.error("Error deleting product from Firestore:", error);
+    }
+  };
